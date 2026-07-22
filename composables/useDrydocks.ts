@@ -64,13 +64,22 @@ export const useDrydocks = () => {
         allDocks.value = res
       }
     } catch (err) {
-      console.error("Failed to load data", err)
+      console.warn("API failed (likely static host), using mock data fallback.")
+      if (allDocks.value.length === 0) {
+        allDocks.value = [...myDocks.value]
+      }
     }
   }
 
   const deleteDock = async (uuid: string) => {
     if (confirm("Are you sure you want to delete this dry dock?")) {
-      await $fetch(`/api/drydocks/${uuid}`, { method: 'DELETE' });
+      try {
+        await $fetch(`/api/drydocks/${uuid}`, { method: 'DELETE' });
+      } catch (err) {
+        // Fallback for GH Pages
+        allDocks.value = allDocks.value.filter(d => d.uuid !== uuid);
+        return;
+      }
       await refreshDocks();
     }
   }

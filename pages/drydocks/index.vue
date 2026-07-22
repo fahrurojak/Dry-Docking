@@ -98,8 +98,9 @@ import AddDockPanel from '~/components/drydock/AddDockPanel.vue'
 
 const router = useRouter()
 const { allDocks, myDocks, refreshDocks, deleteDock, duplicateDock, saveItem } = useDrydocks()
-
-const shipImg = ref('/ship_placeholder.png')
+const config = useRuntimeConfig()
+const base = config.app.baseURL === '/' ? '/' : config.app.baseURL
+const shipImg = ref(base + 'ship_placeholder.png')
 const viewMode = ref('minimal')
 const formType = ref('minimal')
 const showAddPanel = ref(false)
