@@ -11,34 +11,69 @@
 
 ## 📖 Deskripsi Proyek (FRD)
 
-Proyek ini merupakan implementasi ulang (tugas) dari aplikasi operasional *dry docking* asli di industri perkapalan. Dibangun dengan berpegang teguh pada tiga pilar utama *software engineering* profesional:
-1. **Clean Structure:** Arsitektur komponen UI dan pemisahan logika yang terstruktur sangat rapi.
-2. **Clean Syntax:** Penulisan kode berbasis TypeScript yang sangat mudah dibaca, dikembangkan, dan dipelihara.
-3. **High Performance Algorithm:** Pengelolaan status (*state management*) dan manipulasi data yang sangat efisien dan ringan.
+**Dry Docking Management System** adalah proyek implementasi aplikasi manajemen perbaikan kapal. 
+
+**Catatan Penting:** Proyek ini harus mengutamakan **struktur, algoritma, dan *syntax* yang *clean***. **Desain visual bukanlah fokus utama**, melainkan kualitas penulisan kode di belakang layar.
+
+Tiga pilar utama dalam pengembangan proyek ini:
+1. **Clean Structure:** Struktur kode yang memisahkan tampilan dan logika dengan sangat tegas. Semua hitung-hitungan dan filter data diletakkan terpusat di belakang layar (*Composables*), sehingga komponen UI/tampilan menjadi sangat ringan dan rapi.
+2. **High Performance Algorithm:** Algoritma pencarian yang dirancang agar sangat cepat dan hemat memori. Sistem dapat melakukan filter kategori sekaligus mencocokkan kata kunci pencarian dalam satu kali jalan, tanpa perlu mengolah data berulang-ulang.
+3. **Clean Syntax:** Penulisan kode TypeScript yang disiplin dan aman. Sama sekali menghindari jalan pintas seperti tipe `any`, dan sepenuhnya menggunakan tipe data spesifik yang ketat agar aplikasi terhindar dari *error* tersembunyi.
 
 ---
 
 ## ✨ Fitur Utama
 
-| Kategori | Fitur & Fungsionalitas |
-| --- | --- |
+- **Antarmuka Modern (Modern Interface)**  
+  Animasi *splash screen* pembuka bergaya ombak kaca transparan. Mengadopsi tata letak cerdas yang responsif, termasuk navigasi apung khusus untuk perangkat seluler.
 
-| **🌗 Tema Adaptif** | Transisi mulus antara **Dark Mode** & **Light Mode**. Setiap elemen tabel, kartu, formulir, dan *dropdown* beradaptasi secara otomatis untuk kenyamanan mata. |
-| **♿ Aksesibilitas** | Terdapat menu khusus untuk menyesuaikan **Ukuran Teks** (Normal, Besar, Ekstra) dan mode **Kontras Tinggi** agar mudah dibaca. Preferensi otomatis disimpan. |
-| **📊 Tampilan Data** | **Tampilan Ganda:** Mode *Grid Minimalis* untuk ringkasan dan mode *Tabel Detail* untuk analisa (termasuk kolom Budget & Variance). Terdapat fitur filter status (*Planning, Execution*) dan pencarian cepat. |
-| **📑 Manajemen Kapal** | Halaman *dashboard* komprehensif per kapal (`/drydocks/[uuid]`) menggunakan sistem tata letak *Multi-Tab* (General, Specifications, Sourcing, Execution, Costs, Reporting). |
+- **Tema Terang & Gelap (Adaptive Theme)**  
+  Transisi tema yang sangat halus. Seluruh elemen tabel, kartu, dan formulir otomatis beradaptasi dengan mode gelap (*dark mode*) untuk kenyamanan mata.
+
+- **Dukungan Aksesibilitas (Accessibility)**  
+  Menu khusus yang memungkinkan pengguna mengubah ukuran teks secara global serta mengaktifkan mode kontras tinggi agar lebih mudah dibaca.
+
+- **Manajemen Data Ganda (Dual-View Data)**  
+  Daftar kapal dapat dilihat dalam dua format: *Grid Minimalis* (berbasis kartu) dan *Tabel Detail* (lengkap dengan data anggaran). Dilengkapi fitur penyaringan status dan pencarian cepat.
+
+- **Dasbor Spesifik Kapal (Ship Dashboard)**  
+  Halaman manajemen komprehensif untuk setiap kapal. Menggunakan sistem *Multi-Tab* untuk mengelola Spesifikasi, Pelaksanaan, Laporan, hingga Estimasi Biaya.
 
 ---
 
-## 🛠️ Teknologi & Arsitektur Data
+## 🛠️ Teknologi & Ekosistem (Tech Stack)
 
-> *Proyek ini dibangun secara mandiri tanpa menggunakan framework CSS eksternal (seperti Tailwind atau Bootstrap) demi memastikan kode yang ultra-ringan dan kontrol penuh atas setiap elemen desain.*
+> *Dibangun dari bawah ke atas tanpa framework CSS eksternal (seperti Tailwind/Bootstrap) untuk mendemonstrasikan penguasaan dasar (fundamentals) CSS dan JavaScript yang kuat.*
 
-- **Frontend:** Nuxt 3 (Vue.js 3, Composition API), TypeScript.
-- **Styling:** Vanilla CSS 3 (menerapkan *CSS Custom Properties/Variables*, Flexbox, dan Grid).
-- **Backend API:** Server bawaan terintegrasi menggunakan **Nuxt Nitro** (`/server/api/`).
-- **Database Lokal:** Memanfaatkan **File-based JSON Database** (`data/drydocks.json`) yang memastikan semua penambahan dan pengubahan data tersimpan secara nyata saat dikembangkan di lokal komputer.
-- **Toleransi Kegagalan (GitHub Pages Fallback):** Saat di-deploy ke sistem *Static Hosting* yang tidak bisa menjalankan server Node.js (seperti GitHub Pages), sistem akan dengan pintar mendeteksi terputusnya API dan secara otomatis mengambil alih antarmuka dengan **Data Dummy (Mock Data)**. Situs tetap 100% responsif dan interaktif untuk keperluan demonstrasi/portfolio.
+- **Core Framework:** Nuxt 3 (Vue.js 3, Composition API)
+- **Bahasa Pemrograman:** TypeScript (*Strict Typing*)
+- **Styling:** Vanilla CSS 3 (*CSS Custom Properties, Flexbox, Grid*)
+- **Backend / API:** Nuxt Nitro Server (`/server/api/`) terintegrasi.
+- **Database Lokal:** File-based JSON Database (`data/drydocks.json`).
+- **Toleransi Kegagalan (GitHub Pages Fallback):** Sistem cerdas yang mendeteksi lingkungan *Static Hosting*. Jika koneksi API backend gagal, aplikasi akan secara otomatis mengalihkan sumber data ke **Mock Data** klien sehingga aplikasi tetap 100% fungsional untuk keperluan demonstrasi/portfolio.
+
+---
+
+## 📂 Struktur Proyek (Architecture)
+
+Struktur *codebase* disusun sangat modular dengan prinsip *Separation of Concerns* untuk mempermudah pengembangan berskala besar (*Enterprise-ready*).
+
+```text
+📦 Dry-Docking
+ ┣ 📂 assets          # Aset statis (Gambar dokumentasi, CSS Global)
+ ┣ 📂 components      # Komponen Vue presentasional (Reusable UI)
+ ┃ ┣ 📂 drydock       # Komponen khusus fitur perbaikan (Cards, Tables, Tabs)
+ ┃ ┗ 📂 ui            # Komponen dasar antarmuka
+ ┣ 📂 composables     # Logika bisnis & State Management terpusat
+ ┃ ┣ 📜 useDryDock.ts # Manajemen status untuk satu entitas kapal
+ ┃ ┗ 📜 useDrydocks.ts# Algoritma array, filter, dan list utama
+ ┣ 📂 data            # Penyimpanan JSON lokal pengganti Database SQL
+ ┣ 📂 pages           # Sistem File-based Routing bawaan Nuxt
+ ┃ ┣ 📂 drydocks      # Halaman daftar (index) & Detail dinamis ([uuid])
+ ┣ 📂 server          # Lingkungan Backend Nuxt Nitro (REST API internal)
+ ┣ 📂 types           # Definisi tipe (Interface) ketat TypeScript
+ ┗ 📜 app.vue         # Titik masuk utama aplikasi (Root layout & Splash screen)
+```
 
 ---
 

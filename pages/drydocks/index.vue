@@ -97,7 +97,18 @@ import DockTableDetailed from '~/components/drydock/DockTableDetailed.vue'
 import AddDockPanel from '~/components/drydock/AddDockPanel.vue'
 
 const router = useRouter()
-const { allDocks, myDocks, refreshDocks, deleteDock, duplicateDock, saveItem } = useDrydocks()
+const { 
+  allDocks, 
+  myDocks, 
+  searchQuery,
+  selectedFilter,
+  filteredDocks,
+  filterCounts,
+  refreshDocks, 
+  deleteDock, 
+  duplicateDock, 
+  saveItem 
+} = useDrydocks()
 const config = useRuntimeConfig()
 const base = config.app.baseURL === '/' ? '/' : config.app.baseURL
 const shipImg = ref(base + 'ship_placeholder.png')
@@ -139,8 +150,6 @@ const toggleMenu = (uuid) => {
 }
 
 const showFilterMenu = ref(false)
-const selectedFilter = ref('All')
-const searchQuery = ref('')
 
 const toggleFilterMenu = () => { showFilterMenu.value = !showFilterMenu.value }
 const selectFilter = (val) => {
@@ -154,37 +163,6 @@ if (typeof window !== 'undefined') {
     showFilterMenu.value = false
   })
 }
-
-const filterCounts = computed(() => {
-  const counts = { All: allDocks.value.length, Completed: 0, Execution: 0, Planning: 0 }
-  allDocks.value.forEach(d => {
-    if (d.status === 'Completed') counts.Completed++
-    if (d.status === 'Execution') counts.Execution++
-    if (d.status === 'Planning') counts.Planning++
-  })
-  return counts
-})
-
-const filteredDocks = computed(() => {
-  let result = allDocks.value;
-  
-  if (selectedFilter.value !== 'All') {
-    result = result.filter(d => d.status === selectedFilter.value);
-  }
-  
-  if (searchQuery.value.trim() !== '') {
-    const q = searchQuery.value.toLowerCase().trim();
-    result = result.filter(d => {
-      const matchId = d.id && d.id.toLowerCase().includes(q);
-      const matchName = d.name && d.name.toLowerCase().includes(q);
-      const matchDesc = d.description && d.description.toLowerCase().includes(q);
-      const matchShipyard = d.shipyard && d.shipyard.toLowerCase().includes(q);
-      return matchId || matchName || matchDesc || matchShipyard;
-    });
-  }
-  
-  return result;
-})
 
 const openAddMode = (type = 'minimal') => {
   isEditMode.value = false;

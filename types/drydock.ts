@@ -31,3 +31,21 @@ export interface DryDockDetails {
   ownerEstimates: number;
   actualOwnerCosts: number;
 }
+
+export interface DryDockListItem {
+  uuid?: string;
+  id: string;
+  name: string;
+  description: string;
+  manager: string;
+  plannedStart: string;
+  plannedEnd: string;
+  actualStart: string;
+  actualEnd: string;
+  status: 'Planning' | 'Execution' | 'Completed' | string;
+  specs: string;
+  budget: string;
+  estimates: string;
+  variance: string;
+  shipyard: string;
+}
