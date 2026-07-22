@@ -4,6 +4,7 @@ export default defineNuxtConfig({
   devtools: { enabled: false },
   css: ['~/assets/css/main.css'],
   app: {
+    baseURL: '/Dry-Docking/',
     head: {
       link: [
         { rel: 'preconnect', href: 'https://fonts.googleapis.com' },
