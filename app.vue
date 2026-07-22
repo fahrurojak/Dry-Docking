@@ -18,9 +18,23 @@
             </svg>
           </div>
           <div class="loading-indicator">
-            <div class="spinner"></div>
-            <span class="loading-text">Please wait...</span>
+            <span class="loading-text">Preparing docks...</span>
           </div>
+        </div>
+        
+        <!-- Minimalist Waves -->
+        <div class="waves-container">
+          <svg class="waves" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 24 150 28" preserveAspectRatio="none" shape-rendering="auto">
+            <defs>
+              <path id="gentle-wave" d="M-160 44c30 0 58-18 88-18s 58 18 88 18 58-18 88-18 58 18 88 18 v44h-352z" />
+            </defs>
+            <g class="parallax">
+              <use xlink:href="#gentle-wave" x="48" y="0" fill="rgba(255,255,255,0.7)" />
+              <use xlink:href="#gentle-wave" x="48" y="3" fill="rgba(255,255,255,0.5)" />
+              <use xlink:href="#gentle-wave" x="48" y="5" fill="rgba(255,255,255,0.3)" />
+              <use xlink:href="#gentle-wave" x="48" y="7" fill="#ffffff" />
+            </g>
+          </svg>
         </div>
       </div>
     </Transition>
@@ -37,10 +51,9 @@ import { ref, onMounted } from 'vue'
 const isLoading = ref(true)
 
 onMounted(() => {
-  // Give it a smooth 1 second splash delay for the "app booting" feel
   setTimeout(() => {
     isLoading.value = false
-  }, 1000)
+  }, 1200)
 })
 </script>
 
@@ -51,81 +64,118 @@ onMounted(() => {
   left: 0;
   width: 100vw;
   height: 100vh;
-  /* Matching the bright blue from the screenshot */
-  background-color: #3b82f6; 
+  background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%);
   display: flex;
   justify-content: center;
   align-items: center;
   z-index: 9999;
+  overflow: hidden;
 }
 
 .splash-content {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 32px;
+  gap: 24px;
+  z-index: 10;
+  transform: translateY(-20px);
 }
 
 .logo-circle {
-  background: rgba(255, 255, 255, 0.15);
-  padding: 18px;
-  border-radius: 20px;
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+  background: rgba(255, 255, 255, 0.1);
+  padding: 20px;
+  border-radius: 50%;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
   border: 1px solid rgba(255, 255, 255, 0.2);
-  transform: translateZ(0); /* Hardware acceleration */
-  will-change: transform;
 }
 
 .ship-wheel {
   color: white;
-  filter: drop-shadow(0 2px 4px rgba(0,0,0,0.1));
+  animation: slow-spin 8s linear infinite;
+}
+
+@keyframes slow-spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
 }
 
 .loading-indicator {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 16px;
 }
 
 .loading-text {
-  color: rgba(255, 255, 255, 0.9);
-  font-size: 0.9rem;
+  color: white;
+  font-size: 1rem;
   font-weight: 500;
-  letter-spacing: 0.5px;
-  animation: pulse-text 1.5s ease-in-out infinite;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  animation: pulse-text 2s ease-in-out infinite;
 }
 
 @keyframes pulse-text {
-  0%, 100% { opacity: 0.7; }
+  0%, 100% { opacity: 0.6; }
   50% { opacity: 1; }
 }
 
-.spinner {
-  width: 28px;
-  height: 28px;
-  border: 3px solid rgba(255, 255, 255, 0.2);
-  border-radius: 50%;
-  border-top-color: white;
-  animation: spin 0.8s cubic-bezier(0.4, 0, 0.2, 1) infinite;
-  will-change: transform;
+/* Minimalist Waves Animation */
+.waves-container {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 15vh;
+  min-height: 100px;
+  max-height: 150px;
 }
 
-@keyframes spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
+.waves {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  margin-bottom: -7px; /* Fix for safari gap */
 }
 
+.parallax > use {
+  animation: move-forever 25s cubic-bezier(.55,.5,.45,.5)     infinite;
+}
+.parallax > use:nth-child(1) {
+  animation-delay: -2s;
+  animation-duration: 7s;
+}
+.parallax > use:nth-child(2) {
+  animation-delay: -3s;
+  animation-duration: 10s;
+}
+.parallax > use:nth-child(3) {
+  animation-delay: -4s;
+  animation-duration: 13s;
+}
+.parallax > use:nth-child(4) {
+  animation-delay: -5s;
+  animation-duration: 20s;
+}
+
+@keyframes move-forever {
+  0% {
+   transform: translate3d(-90px,0,0);
+  }
+  100% { 
+    transform: translate3d(85px,0,0);
+  }
+}
+
+/* Page Transition */
 .splash-enter-active,
 .splash-leave-active {
-  transition: opacity 0.5s cubic-bezier(0.4, 0, 0.2, 1), transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-  will-change: opacity, transform;
+  transition: opacity 0.8s ease-in-out, transform 0.8s ease-in-out;
 }
 
 .splash-leave-to {
   opacity: 0;
-  transform: scale(1.08);
+  transform: scale(1.05);
 }
 </style>
