@@ -1,41 +1,43 @@
 <template>
   <div id="app-root">
-    <div class="splash-screen">
-      <div class="splash-content">
-        <div class="logo-circle">
-          <svg class="ship-wheel" xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <circle cx="12" cy="12" r="7"/>
-            <circle cx="12" cy="12" r="2"/>
-            <line x1="12" x2="12" y1="22" y2="19"/>
-            <line x1="12" x2="12" y1="5" y2="2"/>
-            <line x1="22" x2="19" y1="12" y2="12"/>
-            <line x1="5" x2="2" y1="12" y2="12"/>
-            <line x1="19.07" x2="16.95" y1="4.93" y2="7.05"/>
-            <line x1="7.05" x2="4.93" y1="16.95" y2="19.07"/>
-            <line x1="19.07" x2="16.95" y1="19.07" y2="16.95"/>
-            <line x1="7.05" x2="4.93" y1="7.05" y2="4.93"/>
+    <Transition name="splash">
+      <div v-if="isLoading" class="splash-screen">
+        <div class="splash-content">
+          <div class="logo-circle">
+            <svg class="ship-wheel" xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="7"/>
+              <circle cx="12" cy="12" r="2"/>
+              <line x1="12" x2="12" y1="22" y2="19"/>
+              <line x1="12" x2="12" y1="5" y2="2"/>
+              <line x1="22" x2="19" y1="12" y2="12"/>
+              <line x1="5" x2="2" y1="12" y2="12"/>
+              <line x1="19.07" x2="16.95" y1="4.93" y2="7.05"/>
+              <line x1="7.05" x2="4.93" y1="16.95" y2="19.07"/>
+              <line x1="19.07" x2="16.95" y1="19.07" y2="16.95"/>
+              <line x1="7.05" x2="4.93" y1="7.05" y2="4.93"/>
+            </svg>
+          </div>
+          <div class="loading-indicator">
+            <span class="loading-text">Preparing docks...</span>
+          </div>
+        </div>
+        
+        <!-- Minimalist Waves -->
+        <div class="waves-container">
+          <svg class="waves" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 24 150 28" preserveAspectRatio="none" shape-rendering="auto">
+            <defs>
+              <path id="gentle-wave" d="M-160 44c30 0 58-18 88-18s 58 18 88 18 58-18 88-18 58 18 88 18 v44h-352z" />
+            </defs>
+            <g class="parallax">
+              <use xlink:href="#gentle-wave" x="48" y="0" fill="rgba(255,255,255,0.7)" />
+              <use xlink:href="#gentle-wave" x="48" y="3" fill="rgba(255,255,255,0.5)" />
+              <use xlink:href="#gentle-wave" x="48" y="5" fill="rgba(255,255,255,0.3)" />
+              <use xlink:href="#gentle-wave" x="48" y="7" fill="#ffffff" />
+            </g>
           </svg>
         </div>
-        <div class="loading-indicator">
-          <span class="loading-text">Preparing docks...</span>
-        </div>
       </div>
-      
-      <!-- Minimalist Waves -->
-      <div class="waves-container">
-        <svg class="waves" xmlns="http://www.w3.org/2000/svg" viewBox="0 24 150 28" preserveAspectRatio="none" shape-rendering="auto">
-          <defs>
-            <path id="gentle-wave" d="M-160 44c30 0 58-18 88-18s 58 18 88 18 58-18 88-18 58 18 88 18 v44h-352z" />
-          </defs>
-          <g class="parallax">
-            <use href="#gentle-wave" x="48" y="0" fill="rgba(255,255,255,0.7)" />
-            <use href="#gentle-wave" x="48" y="3" fill="rgba(255,255,255,0.5)" />
-            <use href="#gentle-wave" x="48" y="5" fill="rgba(255,255,255,0.3)" />
-            <use href="#gentle-wave" x="48" y="7" fill="#ffffff" />
-          </g>
-        </svg>
-      </div>
-    </div>
+    </Transition>
 
     <NuxtLayout>
       <NuxtPage />
@@ -44,7 +46,15 @@
 </template>
 
 <script setup>
-// No script needed, handled purely by CSS
+import { ref, onMounted } from 'vue'
+
+const isLoading = ref(true)
+
+onMounted(() => {
+  setTimeout(() => {
+    isLoading.value = false
+  }, 1200)
+})
 </script>
 
 <style>
@@ -60,11 +70,8 @@
   align-items: center;
   z-index: 9999;
   overflow: hidden;
-  animation: fadeOutSplash 0.5s cubic-bezier(0.4, 0, 0.2, 1) 1.2s forwards;
-  pointer-events: none; /* Allows clicking underneath after fade out */
 }
 
-/* Ensure contents can be clicked before fade out if needed, though usually it's just blocking */
 .splash-content {
   display: flex;
   flex-direction: column;
@@ -114,11 +121,6 @@
   50% { opacity: 1; }
 }
 
-@keyframes fadeOutSplash {
-  0% { opacity: 1; transform: scale(1); pointer-events: all; }
-  100% { opacity: 0; transform: scale(1.05); pointer-events: none; visibility: hidden; }
-}
-
 /* Minimalist Waves Animation */
 .waves-container {
   position: absolute;
@@ -138,7 +140,7 @@
 }
 
 .parallax > use {
-  animation: move-forever 25s cubic-bezier(.55,.5,.45,.5) infinite;
+  animation: move-forever 25s cubic-bezier(.55,.5,.45,.5)     infinite;
 }
 .parallax > use:nth-child(1) {
   animation-delay: -2s;
@@ -158,7 +160,22 @@
 }
 
 @keyframes move-forever {
-  0% { transform: translate3d(-90px,0,0); }
-  100% { transform: translate3d(85px,0,0); }
+  0% {
+   transform: translate3d(-90px,0,0);
+  }
+  100% { 
+    transform: translate3d(85px,0,0);
+  }
+}
+
+/* Page Transition */
+.splash-enter-active,
+.splash-leave-active {
+  transition: opacity 0.8s ease-in-out, transform 0.8s ease-in-out;
+}
+
+.splash-leave-to {
+  opacity: 0;
+  transform: scale(1.05);
 }
 </style>
