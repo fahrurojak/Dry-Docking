@@ -14,7 +14,7 @@ export const useDryDock = () => {
   const dryDockData = ref<DryDockDetails>({
     id: '', vesselName: '', description: '', company: '', responsibleRank: '',
     currency: 'USD', accountCode: 'ABC-123', budget: 0, plannedStartDate: '', plannedEndDate: '',
-    actualStartDate: '', actualEndDate: '', shipyard: null, priority: 'Medium', status: '',
+    actualStartDate: '', actualEndDate: '', shipyard: null, priority: 'Medium', status: 'Planning',
     totalEstimates: 0, totalCosts: 0, yardEstimates: 0, actualYardCosts: 0,
     variance: 0, ownerEstimates: 0, actualOwnerCosts: 0
   });

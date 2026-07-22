@@ -1,7 +1,7 @@
 import { ref } from 'vue'
 
 export const useDrydocks = () => {
-  const allDocks = ref([])
+  const allDocks = ref<any[]>([])
   
   const myDocks = ref([
     {
@@ -68,21 +68,21 @@ export const useDrydocks = () => {
     }
   }
 
-  const deleteDock = async (uuid) => {
+  const deleteDock = async (uuid: string) => {
     if (confirm("Are you sure you want to delete this dry dock?")) {
       await $fetch(`/api/drydocks/${uuid}`, { method: 'DELETE' });
       await refreshDocks();
     }
   }
 
-  const duplicateDock = async (dock) => {
+  const duplicateDock = async (dock: any) => {
     const newDock = { ...dock, id: dock.id + ' (Copy)' };
     delete newDock.uuid;
     await $fetch('/api/drydocks', { method: 'POST', body: newDock });
     await refreshDocks();
   }
 
-  const saveItem = async (isEditMode, editingUuid, formData) => {
+  const saveItem = async (isEditMode: boolean, editingUuid: string | null, formData: any) => {
     if (isEditMode && editingUuid) {
       await $fetch(`/api/drydocks/${editingUuid}`, {
         method: 'PUT',

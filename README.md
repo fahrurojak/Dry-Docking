@@ -9,9 +9,10 @@ Aplikasi ini meniru struktur dan fungsionalitas utama dari referensi Glide app y
 
 ## ✨ Fitur Utama (Features)
 
-1. **Desain UI/UX Premium (Blue Theme)**
-   - Tema warna biru profesional (`#1e3a8a` hingga `#3b82f6`).
-   - *Glassmorphism effect* pada kartu status.
+1. **Desain UI/UX Premium (Bright Glassmorphism)**
+   - *Splash Screen* interaktif dengan animasi "Bright Frosted Glass Waves" yang memukau.
+   - Tema warna biru profesional dan menyegarkan (`#38bdf8` hingga `#0ea5e9` dan biru pekat).
+   - *Glassmorphism effect* (kaca buram) pada kartu status dan logo.
    - *Hover animations* yang halus (kartu sedikit terangkat dan zoom in).
    - Penggunaan bayangan (*shadows*) yang terukur untuk kedalaman elemen.
    
@@ -78,3 +79,25 @@ Proyek ini sudah dilengkapi dengan konfigurasi **GitHub Actions** untuk *deploym
 5. *Push* kode ke *branch* `main` atau `master`.
 6. Proses *deploy* akan berjalan otomatis (bisa dicek di tab **Actions**).
 7. Setelah selesai, website bisa diakses melalui URL: `https://[username-github].github.io/[nama-repo]/`
+
+---
+
+## 📸 Tangkapan Layar (Screenshot Bukti)
+
+> **Catatan:** Anda dapat menangkap layar *(screenshot)* langsung dari browser (dengan `Windows + Shift + S` di Windows atau `Command + Shift + 4` di Mac), lalu menyisipkannya atau menyimpannya di folder `/public` untuk presentasi.
+
+### 1. Animasi Awal (Splash Screen - Bright Glass)
+![Splash Screen Placeholder](./public/splash-placeholder.png)
+*Tampilan pembuka dengan ombak bergaya kaca buram yang bersih.*
+
+### 2. Halaman Utama (Dashboard - Light Mode)
+![Dashboard Light Placeholder](./public/dashboard-light.png)
+*Menampilkan daftar kapal dan fitur filter.*
+
+### 3. Halaman Utama (Dashboard - Dark Mode)
+![Dashboard Dark Placeholder](./public/dashboard-dark.png)
+*Tampilan elegan mode gelap untuk bekerja di malam hari.*
+
+### 4. Menu Aksesibilitas
+![Aksesibilitas Placeholder](./public/accessibility.png)
+*Panel khusus di bagian atas untuk menyesuaikan ukuran dan ketebalan font (kontras).*
