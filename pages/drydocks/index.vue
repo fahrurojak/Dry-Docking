@@ -41,7 +41,7 @@
             </div>
           </div>
           <button class="btn-primary" @click="openAddMode('minimal')">Add</button>
-          <button class="btn-outline">Export</button>
+          <button class="btn-outline" @click="exportToCSV">Export</button>
           <div class="toggle-group flex bg-gray-100 p-1 rounded">
             <button class="toggle-btn" :class="{ active: viewMode === 'minimal' }" @click="viewMode = 'minimal'">Minimal</button>
             <button class="toggle-btn" :class="{ active: viewMode === 'detailed' }" @click="viewMode = 'detailed'">Detailed</button>
@@ -107,7 +107,8 @@ const {
   refreshDocks, 
   deleteDock, 
   duplicateDock, 
-  saveItem 
+  saveItem,
+  exportToCSV
 } = useDrydocks()
 const config = useRuntimeConfig()
 const base = config.app.baseURL === '/' ? '/' : config.app.baseURL
